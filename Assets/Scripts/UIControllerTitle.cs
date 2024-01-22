@@ -16,9 +16,17 @@ public class UIControllerTitle : MonoBehaviour
     {
         
     }
-
+    public void returns()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
     public void play()
     {
         SceneManager.LoadScene("SampleScene");
     }
+    public void quit()
+    {
+        Application.Quit();
+    }
+    
 }
