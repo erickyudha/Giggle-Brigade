@@ -16,12 +16,12 @@ public class AudioLoudnessDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void MicrophoneToAudioClip()
     {
-        string micName = Microphone.devices[0];
+        string micName = PlayerPrefs.GetString("SelectedMicrophone", Microphone.devices[0]);
         Debug.Log(micName);
         micClip = Microphone.Start(micName, true, 20, AudioSettings.outputSampleRate);
     }
