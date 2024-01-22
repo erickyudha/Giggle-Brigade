@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -123,9 +124,12 @@ public class SettingsManager : MonoBehaviour
 
     private void LoadSettings()
     {
+        float bgmVolume = PlayerPrefs.GetFloat("BG_Music_Volume", 0.5f);
+        float sfxVolume = PlayerPrefs.GetFloat("SFX_Volume", 0.5f);
+
         // Load settings using PlayerPrefs
-        bgMusicSlider.value = PlayerPrefs.GetFloat("BG_Music_Volume", 0.5f);
-        sfxSlider.value = PlayerPrefs.GetFloat("SFX_Volume", 0.5f);
+        bgMusicSlider.value = bgmVolume;
+        sfxSlider.value = sfxVolume;
 
         // Check if the Microphone_Index key exists before trying to load it
         if (PlayerPrefs.HasKey("Microphone_Index"))
@@ -163,5 +167,10 @@ public class SettingsManager : MonoBehaviour
         SetBGMusicVolume(bgMusicSlider.value);
         SetSFXVolume(sfxSlider.value);
         SetFullscreen(fullscreenToggle.isOn);
+    }
+
+    public void OpenCalibration()
+    {
+        SceneManager.LoadScene("VoiceCalibration");
     }
 }

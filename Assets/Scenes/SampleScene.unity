@@ -837,7 +837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbf8b5b7d4e7ad499b5ab63b04673cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sampleWindow: 64
+  sampleWindow: 32
 --- !u!4 &766093239
 Transform:
   m_ObjectHideFlags: 0
@@ -1916,8 +1916,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detector: {fileID: 766093238}
-  loudnessSensibility: 100
-  threshold: 5
   player: {fileID: 2067783751}
 --- !u!1 &2097837805
 GameObject:

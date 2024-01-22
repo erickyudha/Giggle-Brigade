@@ -5,14 +5,15 @@ using UnityEngine;
 public class PlayerVoiceController : MonoBehaviour
 {
     public AudioLoudnessDetection detector;
-    public float loudnessSensibility;
-    public float threshold = 30f;
+    private float loudnessSensibility;
+    private float threshold = 30f;
     public Player player;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        threshold = PlayerPrefs.GetFloat("VoiceThreshold", 0f);
+        loudnessSensibility = PlayerPrefs.GetFloat("VoiceSensitivity", 50f);
     }
 
     // Update is called once per frame
