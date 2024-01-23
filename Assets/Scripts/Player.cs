@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+    public ParticleSystem dust;
     public AudioSource jumpSound;
     public AudioSource landSound;
     public AudioSource runningSound;
@@ -36,7 +34,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
-
     }
 
     void Update()
@@ -66,9 +63,11 @@ public class Player : MonoBehaviour
         {
             isHoldingJump = false;
         }
+    }
 
-
-
+    public void CreateDust()
+    {
+        dust.Play();
     }
 
     private void FixedUpdate()
@@ -82,7 +81,6 @@ public class Player : MonoBehaviour
         if (pos.y < -20)
         {
             isDead = true;
-
         }
 
         if (!isGrounded)
@@ -95,7 +93,6 @@ public class Player : MonoBehaviour
                     isHoldingJump = false;
                 }
             }
-
 
             pos.y += velocity.y * Time.fixedDeltaTime;
             if (!isHoldingJump)
@@ -120,7 +117,7 @@ public class Player : MonoBehaviour
                         isGrounded = true;
                         landSound.Play();
                         runningSound.Play();
-
+                        dust.Play();
                     }
 
                     fall = ground.GetComponent<GroundFall>();
@@ -131,8 +128,6 @@ public class Player : MonoBehaviour
                     }
                 }
             }
-            Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
-
 
             Vector2 wallOrigin = new Vector2(pos.x, pos.y);
             Vector2 wallDir = Vector2.right;
@@ -164,7 +159,6 @@ public class Player : MonoBehaviour
                 velocity.x = maxXVelocity;
             }
 
-
             Vector2 rayOrigin = new Vector2(pos.x - 0.7f, pos.y);
             Vector2 rayDirection = Vector2.up;
             float rayDistance = velocity.y * Time.fixedDeltaTime;
@@ -177,8 +171,6 @@ public class Player : MonoBehaviour
             {
                 isGrounded = false;
             }
-            Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
-
         }
 
         Vector2 obstOrigin = new Vector2(pos.x, pos.y);
@@ -202,7 +194,6 @@ public class Player : MonoBehaviour
             }
         }
 
-
         transform.position = pos;
     }
 
@@ -212,6 +203,7 @@ public class Player : MonoBehaviour
         {
             runningSound.Stop();
             jumpSound.Play();
+            dust.Stop();
             isGrounded = false;
             velocity.y = jumpVelocity;
             isHoldingJump = true;
@@ -226,11 +218,9 @@ public class Player : MonoBehaviour
         }
     }
 
-
     void hitObstacle(Obstacle obstacle)
     {
         Destroy(obstacle.gameObject);
         velocity.x *= 0.7f;
     }
-
 }
