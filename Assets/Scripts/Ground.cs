@@ -26,7 +26,7 @@ public class Ground : MonoBehaviour
 
     void Start()
     {
-            
+
     }
 
     // Update is called once per frame
@@ -89,7 +89,7 @@ public class Ground : MonoBehaviour
         float minX = screenRight + 5;
         float actualX = Random.Range(minX, maxX);
 
-        pos.x = actualX + goCollider.size.x / 2; 
+        pos.x = actualX + goCollider.size.x / 2;
         go.transform.position = pos;
 
         Ground goGround = go.GetComponent<Ground>();
@@ -103,15 +103,15 @@ public class Ground : MonoBehaviour
             fall = null;
         }
 
-        if (Random.Range(0,3) == 0)
+        if (Random.Range(0, 3) == 0)
         {
             fall = go.AddComponent<GroundFall>();
             fall.fallSpeed = Random.Range(1.0f, 3.0f);
         }
 
 
-        int obstacleNum = Random.Range(0, 4);
-        for (int i=0; i<obstacleNum; i++)
+        int obstacleNum = Random.Range(0, 1);
+        for (int i = 0; i < obstacleNum; i++)
         {
             GameObject box = Instantiate(boxTemplate.gameObject);
             float y = goGround.groundHeight;

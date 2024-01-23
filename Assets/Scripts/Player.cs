@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        /* Vector2 pos = transform.position;
+        Vector2 pos = transform.position;
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
 
         if (isGrounded || groundDistance <= jumpGroundThreshold)
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             isHoldingJump = false;
-        } */
+        }
 
 
 
@@ -75,11 +75,10 @@ public class Player : MonoBehaviour
         }
 
         Vector2 pos = transform.position;
-
         if (pos.y < -20)
         {
             isDead = true;
-            
+
         }
 
         if (!isGrounded)
