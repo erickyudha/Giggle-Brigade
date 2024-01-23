@@ -5,6 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+    public AudioSource jumpSound;
+    public AudioSource landSound;
+    public AudioSource runningSound;
     public float gravity;
     public Vector2 velocity;
     public float maxXVelocity = 100;
@@ -33,6 +36,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
+
     }
 
     void Update()
@@ -114,6 +118,9 @@ public class Player : MonoBehaviour
                         pos.y = groundHeight;
                         velocity.y = 0;
                         isGrounded = true;
+                        landSound.Play();
+                        runningSound.Play();
+
                     }
 
                     fall = ground.GetComponent<GroundFall>();
@@ -203,6 +210,8 @@ public class Player : MonoBehaviour
     {
         if (isGrounded)
         {
+            runningSound.Stop();
+            jumpSound.Play();
             isGrounded = false;
             velocity.y = jumpVelocity;
             isHoldingJump = true;
