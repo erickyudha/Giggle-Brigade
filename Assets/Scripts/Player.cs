@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Vector2 pos = transform.position;
+        /* Vector2 pos = transform.position;
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
 
         if (isGrounded || groundDistance <= jumpGroundThreshold)
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             isHoldingJump = false;
-        }
+        } */
     }
 
     public void CreateDust()
@@ -152,6 +152,35 @@ public class Player : MonoBehaviour
         {
             float velocityRatio = velocity.x / maxXVelocity;
             acceleration = maxAcceleration * (1 - velocityRatio);
+
+            // Adjust maxXVelocity based on distance
+            if (distance < 500)
+            {
+                maxXVelocity = 30;
+            }
+            else if (distance < 1000)
+            {
+                maxXVelocity = 50;
+            }
+            else if (distance < 1500)
+            {
+                maxXVelocity = 70;
+            }
+            else if (distance < 2000)
+            {
+                maxXVelocity = 85;
+            }
+            else if (distance < 2500)
+            {
+                maxXVelocity = 100;
+            }
+
+            velocity.x += acceleration * Time.fixedDeltaTime;
+            if (velocity.x >= maxXVelocity)
+            {
+                velocity.x = maxXVelocity;
+            }
+
             maxHoldJumpTime = maxMaxHoldJumpTime * velocityRatio;
 
             velocity.x += acceleration * Time.fixedDeltaTime;

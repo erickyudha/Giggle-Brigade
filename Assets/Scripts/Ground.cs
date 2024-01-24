@@ -135,9 +135,9 @@ public class Ground : MonoBehaviour
         // For example, increase density gradually from 0.1 to 1 as player distance increases from 100 to 5000
 
         float minDistance = 100.0f;
-        float maxDistance = 4000.0f;
+        float maxDistance = 2500.0f;
 
-        float minDensity = 0.1f;
+        float minDensity = 0.3f;
         float maxDensity = 1.0f;
 
         float normalizedDistance = Mathf.Clamp01((playerDistance - minDistance) / (maxDistance - minDistance));

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
+    public AudioSource gameoverSound;
     public HighScoreText highScoreText;
     Player player;
     Text distanceText;
@@ -28,7 +29,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -40,6 +41,7 @@ public class UIController : MonoBehaviour
         if (player.isDead && !isDone)
         {
             results.SetActive(true);
+            gameoverSound.Play();
             finalDistanceText.text = distance + " m";
             bool newHigh = highScoreText.SetNewHighScore(distance);
             if (newHigh)
@@ -62,5 +64,5 @@ public class UIController : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 
-    
+
 }

@@ -22,7 +22,15 @@ public class UIControllerTitle : MonoBehaviour
     }
     public void play()
     {
-        GameManager.LoadGameSceneAsync();
+        int highScore = PlayerPrefs.GetInt("HighScore", 0);
+        if (highScore > 0)
+        {
+            GameManager.LoadGameSceneAsync();
+        }
+        else
+        {
+            SceneManager.LoadScene("Tutorial");
+        }
     }
 
     IEnumerator LoadGameAsync()
@@ -48,6 +56,11 @@ public class UIControllerTitle : MonoBehaviour
     public void credits()
     {
         SceneManager.LoadScene("Credits");
+    }
+
+    public void Tutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
     }
 
 }
