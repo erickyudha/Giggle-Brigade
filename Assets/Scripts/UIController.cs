@@ -6,11 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
+    public HighScoreText highScoreText;
     Player player;
     Text distanceText;
+    public GameObject highScoreMark;
 
     GameObject results;
     Text finalDistanceText;
+    private bool isDone = false;
 
     private void Awake()
     {
@@ -34,10 +37,17 @@ public class UIController : MonoBehaviour
         int distance = Mathf.FloorToInt(player.distance);
         distanceText.text = distance + " m";
 
-        if (player.isDead)
+        if (player.isDead && !isDone)
         {
             results.SetActive(true);
             finalDistanceText.text = distance + " m";
+            bool newHigh = highScoreText.SetNewHighScore(distance);
+            if (newHigh)
+            {
+                highScoreMark.SetActive(true);
+            }
+
+            isDone = true;
         }
     }
 

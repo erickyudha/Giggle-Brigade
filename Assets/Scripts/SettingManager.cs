@@ -77,6 +77,7 @@ public class SettingsManager : MonoBehaviour
         {
             // Add logic to handle the selected microphone
             // For example, you can store the microphone device name in PlayerPrefs
+            PlayerPrefs.SetInt("SelectedMicrophoneIndex", index);
             PlayerPrefs.SetString("SelectedMicrophone", microphoneDevices[index]);
             SaveSettings();
         }

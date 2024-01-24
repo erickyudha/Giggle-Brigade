@@ -20,7 +20,6 @@ public class PlayerVoiceController : MonoBehaviour
     void Update()
     {
         float loudness = detector.GetLoudnessFromMic() * loudnessSensibility;
-        Debug.Log(loudness);
 
         if (loudness >= threshold)
         {

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -120,12 +121,12 @@ public class Player : MonoBehaviour
                         dust.Play();
                     }
 
-                    fall = ground.GetComponent<GroundFall>();
+                    /* fall = ground.GetComponent<GroundFall>();
                     if (fall != null)
                     {
                         fall.player = this;
                         cameraController.StartShaking();
-                    }
+                    } */
                 }
             }
 
@@ -209,18 +210,21 @@ public class Player : MonoBehaviour
             isHoldingJump = true;
             holdJumpTimer = 0;
 
-            if (fall != null)
+            /* if (fall != null)
             {
                 fall.player = null;
                 fall = null;
                 cameraController.StopShaking();
-            }
+            } */
         }
     }
 
     void hitObstacle(Obstacle obstacle)
     {
-        Destroy(obstacle.gameObject);
+        isDead = true;
+        acceleration = 0;
+        velocity = Vector2.zero;
+        GetComponent<SpriteRenderer>().enabled = false;
         velocity.x *= 0.7f;
     }
 }

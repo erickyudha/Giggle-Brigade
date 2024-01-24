@@ -22,6 +22,22 @@ public class UIControllerTitle : MonoBehaviour
     }
     public void play()
     {
+        GameManager.LoadGameSceneAsync();
+    }
+
+    IEnumerator LoadGameAsync()
+    {
+        // Load the LoadingScreen scene asynchronously
+        AsyncOperation loadingOperation = SceneManager.LoadSceneAsync("LoadingScreen");
+
+        // Wait until the loading is complete
+        while (!loadingOperation.isDone)
+        {
+            // You can use loadingOperation.progress to get the loading progress if needed
+            yield return null;
+        }
+
+        // The LoadingScreen scene is loaded; now load the actual game scene
         SceneManager.LoadScene("SampleScene");
     }
     public void quit()

@@ -22,6 +22,9 @@ public class Ground : MonoBehaviour
     // New field for obstacle density
     public float obstacleDensity = 0.5f;
 
+    // New field for minimum distance from ledge
+    public float minDistanceFromLedge = 2.0f;
+
     private void Awake()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
@@ -78,7 +81,7 @@ public class Ground : MonoBehaviour
         maxX *= 0.7f;
         maxX += groundRight;
         float minX = screenRight + 5;
-        float actualX = Random.Range(minX, maxX);
+        float actualX = groundRight - 5f; // Random.Range(minX, maxX);
 
         pos.x = actualX + goCollider.size.x / 2;
         go.transform.position = pos;
@@ -86,7 +89,8 @@ public class Ground : MonoBehaviour
         Ground goGround = go.GetComponent<Ground>();
         goGround.groundHeight = constantHeight;
 
-        // Removed GroundFall and obstacle spawning related code
+        // Calculate obstacle density based on player's distance
+        float obstacleDensity = CalculateObstacleDensity(player.distance);
 
         // Spawn obstacles based on density
         float obstacleSpawnProbability = Random.Range(0.0f, 1.0f);
@@ -95,6 +99,9 @@ public class Ground : MonoBehaviour
             SpawnObstacle(goGround);
         }
     }
+
+
+
 
     void SpawnObstacle(Ground ground)
     {
@@ -108,14 +115,33 @@ public class Ground : MonoBehaviour
         int randomIndex = Random.Range(0, obstacles.Count);
         Obstacle selectedObstacle = obstacles[randomIndex];
 
-        // Spawn the selected obstacle
-        GameObject box = Instantiate(selectedObstacle.gameObject);
-        float y = ground.groundHeight;
+        // Calculate minimum and maximum X positions for spawning the obstacle
         float halfWidth = ground.collider.size.x / 2 - 1;
-        float left = ground.transform.position.x - halfWidth;
-        float right = ground.transform.position.x + halfWidth;
+        float left = ground.transform.position.x - halfWidth + minDistanceFromLedge;
+        float right = ground.transform.position.x + halfWidth - minDistanceFromLedge;
+
+        // Spawn the selected obstacle within the calculated range
         float x = Random.Range(left, right);
+        float y = ground.groundHeight;
         Vector2 boxPos = new Vector2(x, y);
-        box.transform.position = boxPos;
+
+        GameObject box = Instantiate(selectedObstacle.gameObject, boxPos, Quaternion.identity);
+    }
+
+    float CalculateObstacleDensity(float playerDistance)
+    {
+        // Adjust the density based on the player's distance
+        // You can define your own formula here
+        // For example, increase density gradually from 0.1 to 1 as player distance increases from 100 to 5000
+
+        float minDistance = 100.0f;
+        float maxDistance = 4000.0f;
+
+        float minDensity = 0.1f;
+        float maxDensity = 1.0f;
+
+        float normalizedDistance = Mathf.Clamp01((playerDistance - minDistance) / (maxDistance - minDistance));
+
+        return Mathf.Lerp(minDensity, maxDensity, normalizedDistance);
     }
 }
